@@ -1,0 +1,42 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::645885595427:root"
+            },
+            "Action": [
+                "sts:AssumeRole",
+                "sts:TagSession"
+            ],
+            "Condition": {
+                "ArnEquals": {
+                    "aws:PrincipalArn": "arn:aws:iam::645885595427:role/workload-ec2-instance-role"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::645885595427:root"
+            },
+            "Action": "sts:SetSourceIdentity",
+            "Condition": {
+                "StringLike": {
+                    "sts:SourceIdentity": "i-*"
+                },
+                "ArnEquals": {
+                    "aws:PrincipalArn": "arn:aws:iam::645885595427:role/workload-ec2-instance-role"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "ec2.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
